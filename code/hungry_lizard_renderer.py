@@ -106,8 +106,8 @@ def hungry_lizard_renderer(action_list):
         data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
         im = plt.imshow(data, animated=True)
         ims.append([im])
+        plt.pause(0.05)
 
     ani = animation.ArtistAnimation(fig, ims, interval=500, blit=True,
-                              repeat_delay=1000)
+                                    repeat_delay=1000)
     return ani
-
