@@ -107,7 +107,7 @@ def hungry_lizard_renderer(action_list):
         im = plt.imshow(data, animated=True)
         ims.append([im])
 
-    animation.ArtistAnimation(fig, ims, interval=500, blit=True,
+    ani = animation.ArtistAnimation(fig, ims, interval=500, blit=True,
                               repeat_delay=1000)
-    plt.show()
+    return ani
 
