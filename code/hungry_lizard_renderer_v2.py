@@ -147,5 +147,6 @@ def hungry_lizard_renderer_v2(action_list):
                 texts1[ind5].set_text('')
         return im,
 
-    ani = animation.FuncAnimation(fig, animate, interval=500, blit=True)
+    ani = animation.FuncAnimation(fig, animate,
+                                  interval=len(action_list), blit=True)
     return ani
