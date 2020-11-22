@@ -11,6 +11,9 @@ def hungry_lizard_renderer(action_list):
     height = lizard.height
     width = lizard.width
 
+    def flatten(mini_x, mini_y):
+        return int(mini_x+mini_y*width)
+
     def stack(ind):
         mini_x = int(ind % width)
         mini_y = int(ind // width)
@@ -30,6 +33,7 @@ def hungry_lizard_renderer(action_list):
 
     ims = []
     fig, ax = plt.subplots(figsize=(8, 5))
+    im = plt.imshow(np.zeros((width, height)), animated=True)
     for ind1 in range(len(action_list) + 1):
         if ind1 != 0:
             state, reward, done, info = lizard.step(action_list[ind1 - 1])
