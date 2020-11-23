@@ -133,7 +133,7 @@ def hungry_lizard_renderer_v2(action_list):
                       fontsize=18,
                       va='top'
                       )]
-    for ind2 in range(4):
+    for ind2 in range(20):
         plt.tight_layout()
 
     def animate(ind4):
