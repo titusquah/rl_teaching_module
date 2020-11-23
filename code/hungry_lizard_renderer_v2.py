@@ -128,7 +128,7 @@ def hungry_lizard_renderer_v2(action_list):
                       transform=ax.transAxes,
                       fontsize=18),
               ax.text(1.02, 1,
-                      'Current reward = {0:.2f}'.format(0),
+                      'Total reward = {0:.2f}'.format(0),
                       transform=ax.transAxes,
                       fontsize=18,
                       va='top'
@@ -150,7 +150,7 @@ def hungry_lizard_renderer_v2(action_list):
         small_locs = small_loc_list[ind4]
         large_locs = large_loc_list[ind4]
         lizard_locs = lizard_loc_list[ind4]
-        texts2[1].set_text('Current reward = {0:.0f}'.format(reward))
+        texts2[1].set_text('Total reward = {0:.0f}'.format(reward))
         colored_tiles = []
         for bird_loc in bird_locs:
             new_y = y_reflect(bird_loc[1])
