@@ -179,4 +179,5 @@ def hungry_lizard_renderer_v2(action_list):
 
     ani = animation.FuncAnimation(fig, animate, frames=len(action_list) + 1,
                                   interval=500, blit=False)
+    plt.tight_layout(pad=2)
     return ani
