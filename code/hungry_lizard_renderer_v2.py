@@ -30,6 +30,18 @@ def hungry_lizard_renderer_v2(action_list):
         else:
             new_y = mini_y
         return new_y
+    
+    def x_reflect(mini_x):
+        if mini_x > (width - 1) / 2:
+            new_x = int((width - 1) / 2
+                        - (mini_x - (width - 1) / 2))
+        elif mini_x < (width - 1) / 2:
+            new_x = int(
+                int(np.ceil((width - 1) / 2))
+                + int((width - 1) / 2 - mini_x))
+        else:
+            new_x = mini_x
+        return new_x
 
     map_state_list = []
     reward_list = []
@@ -84,6 +96,15 @@ def hungry_lizard_renderer_v2(action_list):
     norm = colors.BoundaryNorm(bounds, cmap.N)
     ax.grid(which='major', axis='both', linestyle='-', color='k',
             linewidth=2)
+    ax.tick_params(
+        axis='both',  # changes apply to the x-axis
+        which='both',  # both major and minor ticks are affected
+        bottom=False,  # ticks along the bottom edge are off
+        top=False,  # ticks along the top edge are off
+        labelbottom=False,
+        labelleft=False,
+        left=False,
+        right=False)  # labels along the bottom edge are off
     x_ticks = np.arange(-0.5, width - 0.5, 1)
     y_ticks = np.arange(-0.5, height - 0.5, 1)
     ax.set_xticks(x_ticks)
@@ -94,10 +115,10 @@ def hungry_lizard_renderer_v2(action_list):
                    animated=True,
                    cmap=cmap, norm=norm)
     text_locs = []
+
     for ind2 in range(width):
         for ind3 in range(height):
             text_locs.append([ind2, ind3])
-
     texts1 = [ax.text(loc[0], loc[1], '',
                       ha='center',
                       va='center',
@@ -112,9 +133,18 @@ def hungry_lizard_renderer_v2(action_list):
                       fontsize=18,
                       va='top'
                       )]
+    for ind2 in range(4):
+        plt.tight_layout()
 
     def animate(ind4):
-        im.set_array(map_state_list[ind4])
+        new_map_state = np.zeros((width, height))
+        for ind5 in range(height):
+            new_y = y_reflect(ind5)
+            new_y = ind5
+            for ind6 in range(width):
+                new_x = x_reflect(ind6)
+                new_map_state[new_x, new_y] = map_state_list[ind4][ind6, ind5]
+        im.set_array(new_map_state)
         bird_locs = bird_loc_list[ind4]
         reward = reward_list[ind4]
         small_locs = small_loc_list[ind4]
@@ -124,29 +154,29 @@ def hungry_lizard_renderer_v2(action_list):
         colored_tiles = []
         for bird_loc in bird_locs:
             new_y = y_reflect(bird_loc[1])
-            ind5 = flatten(bird_loc[0], new_y)
+            ind5 = flatten(new_y, bird_loc[0])
             texts1[ind5].set_text('B')
             colored_tiles.append(ind5)
         for small_loc in small_locs:
             new_y = y_reflect(small_loc[1])
-            ind5 = flatten(small_loc[0], new_y)
+            ind5 = flatten(new_y,small_loc[0])
             texts1[ind5].set_text('3')
             colored_tiles.append(ind5)
         for large_loc in large_locs:
             new_y = y_reflect(large_loc[1])
-            ind5 = flatten(large_loc[0], new_y)
+            ind5 = flatten(new_y, large_loc[0])
             texts1[ind5].set_text('10')
             colored_tiles.append(ind5)
         for lizard_loc in lizard_locs:
             new_y = y_reflect(lizard_loc[1])
-            ind5 = flatten(lizard_loc[0], new_y)
+            ind5 = flatten(new_y, lizard_loc[0])
             texts1[ind5].set_text('L')
             colored_tiles.append(ind5)
         for ind5 in range(width * height - 1):
-            if ind5 in colored_tiles:
+            if ind5 not in colored_tiles:
                 texts1[ind5].set_text('')
         return im,
 
-    ani = animation.FuncAnimation(fig, animate,
-                                  interval=len(action_list), blit=True)
+    ani = animation.FuncAnimation(fig, animate, frames=len(action_list) + 1,
+                                  interval=500, blit=False)
     return ani
