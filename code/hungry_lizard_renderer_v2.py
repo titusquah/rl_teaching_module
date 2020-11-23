@@ -128,7 +128,7 @@ def hungry_lizard_renderer_v2(action_list):
                       transform=ax.transAxes,
                       fontsize=18),
               ax.text(1.02, 1,
-                      'Current reward = {0}'.format(0),
+                      'Current reward = {0:.2f}'.format(0),
                       transform=ax.transAxes,
                       fontsize=18,
                       va='top'
