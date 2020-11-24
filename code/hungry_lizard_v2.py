@@ -24,13 +24,14 @@ class HungryLizard_v2(gym.Env):
         self.height = h
         self.area = int(self.width * self.height)
         self.observation_space = spaces.Tuple((spaces.Discrete(self.area),
-                                              spaces.Discrete(2)))
+                                               spaces.Discrete(2)))
 
         self.action_space = spaces.Discrete(4)
 
         self.counter = 0
 
         self.state = None
+        self.time = None
         self.done = False
 
         self.current_step = 0
@@ -55,6 +56,7 @@ class HungryLizard_v2(gym.Env):
 
     def reset(self):
         self.state = [0, 1]
+        self.time = 0
         self.done = False
         return self.state
 
@@ -85,6 +87,7 @@ class HungryLizard_v2(gym.Env):
             reward = 0
             done = True
         self.done = done
+        self.time += 1
 
         info = None
 
