@@ -40,15 +40,15 @@ class HungryLizard(gym.Env):
                                  'x': self.array[:, 1],
                                  'y': self.array[:, 0]})
         if birds_loc is None:
-            self.birds_loc = [9, 6, 3]
+            self.birds_loc = [2, 6, 8, 15]
         else:
             self.birds_loc = birds_loc
         if small_reward_loc is None:
-            self.small_reward_loc = [5, 2, 13, 10, 7]
+            self.small_reward_loc = [12]
         else:
             self.small_reward_loc = np.array(small_reward_loc)
         if large_reward_loc is None:
-            self.large_reward_loc = [15]
+            self.large_reward_loc = [3]
         else:
             self.large_reward_loc = np.array(large_reward_loc)
 
